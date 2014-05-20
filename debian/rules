@@ -1,0 +1,59 @@
+#!/usr/bin/make -f
+# debian/rules for gpl j
+default: binary
+
+clean:
+	rm -f j701_b_source.tar.gz
+	cd jgplsrc; rm -f *.o esum.txt make.txt jconsole libj.so
+	cd jgplsrc/j/bin; rm -f jconsole libj.so
+	cd debian; rm -rf bits jconfig tmp data.tar.gz control.tar.gz debian-binary files
+
+build: build-arch build-indep
+
+build-arch:
+	[ -d jgplsrc ] || debian/rules get-orig-source
+	debian/configure
+	cd jgplsrc; bin/build_jconsole
+	cd jgplsrc; bin/build_libj
+	debian/test
+
+build-indep:
+
+install:
+
+binary:
+	[ -r jgplsrc/libj.so ] || debian/rules build
+	rm -rf debian/tmp
+	mkdir -p debian/tmp/DEBIAN
+	cp -a usr debian/tmp
+	cp -a etc debian/tmp
+	mkdir -p debian/tmp/usr/bin
+	cp jgplsrc/jconsole debian/tmp/usr/bin/ijconsole # java uses name jconsole
+	strip debian/tmp/usr/bin/ijconsole
+	mkdir -p debian/tmp/usr/lib/x86_64-linux-gnu
+	cp jgplsrc/libj.so debian/tmp/usr/lib/x86_64-linux-gnu/libj.so.8.0.1
+	strip --strip-unneeded debian/tmp/usr/lib/x86_64-linux-gnu/libj.so.8.0.1
+	cp debian/changelog debian/copyright debian/tmp/usr/share/doc/jlang/
+	gzip -9 debian/tmp/usr/share/doc/jlang/changelog
+	grep -A99 ^Package: debian/control >debian/tmp/DEBIAN/control
+	grep Maintainer: debian/control >>debian/tmp/DEBIAN/control
+	awk '/^jlang/{print "Version: " $$2; exit}' debian/changelog | sed 's/[()]//g' >>debian/tmp/DEBIAN/control
+	cd debian/tmp; find etc -type f | sed 's}^}/}' >DEBIAN/conffiles
+	cp debian/changelog debian/post* debian/tmp/DEBIAN
+	find debian/tmp -type d | xargs chmod 755
+	find debian/tmp -type f | xargs chmod 644
+	chmod 755 debian/tmp/DEBIAN/p*
+	chmod 755 debian/tmp/usr/bin/ijconsole
+	cd debian/tmp/DEBIAN; tar czf ../../control.tar.gz --owner=root --group=root ./*
+	cd debian/tmp; tar czf ../data.tar.gz --owner=root --group=root ./usr ./etc
+	echo 2.0 >debian/debian-binary
+	cd debian; ar rf ../../jlang_8.0.1.3_amd64.deb debian-binary control.tar.gz data.tar.gz
+	echo jlang_8.0.1.3_amd64.deb devel extra > debian/files
+
+binary-arch:
+
+binary-indep:
+
+get-orig-source:
+	wget http://www.jsoftware.com/download/j701_b_source.tar.gz
+	tar zxf j701_b_source.tar.gz

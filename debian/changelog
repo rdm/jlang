@@ -1,0 +1,25 @@
+jlang (8.0.1.3) non-free; urgency=low
+
+  * debian/bits.c
+    - created
+  * debian/configure
+    - created
+  * debian/control
+    - extracted from hand-built precursor
+  * debian/copyright
+    - created
+  * debian/postinst
+    - extracted from hand-built precursor
+    - simplified
+  * debian/postrm
+    - extracted from hand-built precursor
+    - simplified
+  * debian/README.debian
+    - created
+  * debian/rules
+    - created
+  * debian/test
+    - created
+
+ -- Raul Miller <rauldmiller@gmail.com>  Tue, 20 May 2014 00:56:33 +0000
+

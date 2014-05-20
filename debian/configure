@@ -1,0 +1,18 @@
+#!/bin/sh
+# initial draft: configure for native compilation
+cp jgplsrc/bin/jconfig debian/jconfig
+make debian/bits
+bits=`debian/bits`
+
+# should decide what to do about libreadline/libedit
+# could do trial and error builds until we find something that works
+# but for debian it makes sense to just specify build requirements
+#
+# FIXME: ignoring, for now
+
+# ideally, should probably also have a config system which relies on
+# creating new files as opposed to editting an existing file.
+#
+# FIXME: for now, just make it work
+
+sed "s/^bits=.*/bits=$bits/; s/-W1/-Wl/; s/,soname/,-soname/" <debian/jconfig >jgplsrc/bin/jconfig

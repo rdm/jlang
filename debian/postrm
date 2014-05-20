@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+case "$1" in remove) ldconfig;; esac
+gtk-update-icon-cache --quiet --force --ignore-theme-index /usr/share/icons/hicolor

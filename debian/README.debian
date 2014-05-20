@@ -1,0 +1,21 @@
+In this initial draft there should be no major differences between J
+built for the debian package system and the official J releases. 
+
+----------------------------------------------------------------------
+
+That said, note that while J itself has been released under the GPL,
+the current licenses for other content would require them to be
+distributed as non-free. This is reasonable as there's significant
+fixes needed in the core engine, and it does not make sense to 
+diffuse focus onto other content when most people would rather
+spend their time elsewhere.
+
+But this also means that this must be classified as non-free,
+because other content is bundled with the interpreter.
+
+See also http://www.jsoftware.com/jwiki/System/Interpreter/Bugs
+for a list of issues which need attention, and 
+http://www.jsoftware.com/jwiki/System/Interpreter/Requests for
+a list of plausible enhancements. (Or just try running J on
+OpenBSD - a great exercise for understanding what needs 
+attention..)

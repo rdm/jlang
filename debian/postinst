@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+ldconfig
+gtk-update-icon-cache --quiet --force --ignore-theme-index /usr/share/icons/hicolor

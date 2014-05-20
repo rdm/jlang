@@ -1,0 +1,11 @@
+#!/bin/sh
+# 0 :0 NB. Test a recently built J binary
+ cd jgplsrc
+ exec j/bin/jconsole "../$0" "$@"
+)
+
+9!:29]1[9!:27'2!:55]1' NB. exit on error
+load 'test/test.ijs'
+bad=: TEST ddall NB. run all tests
+BAD ddall NB. report test that failed
+exit 0

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Exec=/usr/bin/jqt
+Icon=jgreen
+Terminal=false
+Name=JQt IDE
+Comment=JQt IDE
+Categories=Application;Development;

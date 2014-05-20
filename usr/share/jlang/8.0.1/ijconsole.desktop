@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Exec=/usr/bin/ijconsole-8.0.1
+Icon=jgreen
+Terminal=true
+Name=Jconsole
+Comment=Jconsole terminal
+Categories=Application;Development;
