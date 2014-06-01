@@ -15,3 +15,6 @@ sprawl. There's something to be said for standardization and good
 tools, but they must be accompanied by people that understand
 how things work, and that's not happening if the docs aren't
 there.
+
+To build the debian packages, use dpkg-buildpackage from the
+command line, within the jlang-*/ directory.
