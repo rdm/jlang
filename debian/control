@@ -9,7 +9,7 @@ Homepage: http://www.jsoftware.com
 Package: jlang
 Architecture: amd64
 Priority: extra
-Depends: libc6 (>=2.13-28)
+Depends: libc6 (>=2.13-28), libj
 Section: devel
 Multi-Arch: allowed
 Suggests: libqtcore4, libqtgui4, libqt4-opengl, libqtwebkit4, libqt4-declarative, libqt4-declarative-particles, libsqlite3-0
@@ -18,3 +18,13 @@ Description: J interpreter
  J is a general-purpose high-performance programming language.
  J is open source, and available for Windows, Linux, Mac, 
  Android and iOS.
+
+Package: libj
+Architecture: amd64
+Priority: extra
+Depends: libc6 (>=2.13-28)
+Section: libdevel
+Description: J interpreter
+ Keep this installed while upgrading J if you have your
+ own custom softare linked against libj and do not have
+ time to test against the newer shared object.

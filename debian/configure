@@ -15,4 +15,4 @@ bits=`debian/bits`
 #
 # FIXME: for now, just make it work
 
-sed "s/^bits=.*/bits=$bits/; s/-W1/-Wl/; s/,soname/,-soname/" <debian/jconfig >jgplsrc/bin/jconfig
+sed "s/^bits=.*/bits=$bits/; s/-W1/-Wl/; s/,soname.* /,-soname,libj.so.8 /" <debian/jconfig >jgplsrc/bin/jconfig
