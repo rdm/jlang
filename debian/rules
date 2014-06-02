@@ -9,6 +9,7 @@
 default: binary
 
 clean:
+	[ -d jgplsrc ] || debian/rules get-orig-source
 	rm -f j701_b_source.tar.gz
 	cd jgplsrc; rm -f *.o esum.txt make.txt jconsole libj.so
 	cd jgplsrc/j/bin; rm -f jconsole libj.so
