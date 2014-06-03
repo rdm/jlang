@@ -8,7 +8,10 @@
 
 default: binary
 
-clean:
+perms:
+	cd debian; chmod u+rx configure packagecontrol rules test version
+
+clean: perms
 	[ -d jgplsrc ] || debian/rules get-orig-source
 	rm -f j701_b_source.tar.gz
 	cd jgplsrc; rm -f *.o esum.txt make.txt jconsole libj.so
@@ -37,35 +40,30 @@ binary:
 	mkdir -p debian/tmp/jlang/usr/bin
 	cp jgplsrc/jconsole debian/tmp/jlang/usr/bin/ijconsole # java uses name jconsole
 	strip debian/tmp/jlang/usr/bin/ijconsole
-	mkdir -p debian/tmp/libj/usr/lib/x86_64-linux-gnu
-	cp jgplsrc/libj.so debian/tmp/libj/usr/lib/x86_64-linux-gnu/libj.so.8.0.1
-	cd debian/tmp/libj/usr/lib/x86_64-linux-gnu; ln -s libj.so.8.0.1 libj.so.8; ln -s libj.so.8.0.1 libj.so
-	strip --strip-unneeded debian/tmp/libj/usr/lib/x86_64-linux-gnu/libj.so.8.0.1
+	mkdir -p debian/tmp/libj/usr/lib/`debian/version triplet`
+	cp jgplsrc/libj.so debian/tmp/libj/usr/lib/`debian/version triplet`/libj.so.`debian/version build`
+	cd debian/tmp/libj/usr/lib/; ln -s libj.so.`../../../../version build` libj.so.`../../../../version major`; ln -s libj.so.`../../../../version build` libj.so
+	strip --strip-unneeded debian/tmp/libj/usr/lib/`debian/version triplet`/libj.so.`debian/version build`
 	cp debian/changelog debian/copyright debian/tmp/jlang/usr/share/doc/jlang/
 	cp debian/changelog debian/copyright debian/tmp/libj/usr/share/doc/libj/
-	gzip -9 debian/tmp/jlang/usr/share/doc/jlang/changelog debian/tmp/libj/usr/share/doc/libj/changelog
-	sed -n '/^Package: jlang/,/^$$/p' debian/control | grep . >debian/tmp/jlang/DEBIAN/control
-	sed -n '/^Package: libj/,/^$$/p' debian/control | grep . >debian/tmp/libj/DEBIAN/control
-	grep Maintainer: debian/control >>debian/tmp/jlang/DEBIAN/control
-	grep Maintainer: debian/control >>debian/tmp/libj/DEBIAN/control
-	awk '/^jlang/{print "Version: " $$2; exit}' debian/changelog | sed 's/[()]//g' >>debian/tmp/jlang/DEBIAN/control
-	awk '/^jlang/{print "Version: " $$2; exit}' debian/changelog | sed 's/[()]//g' >>debian/tmp/libj/DEBIAN/control
+	gzip -9 debian/tmp/*/usr/share/doc/*/changelog
+	debian/packagecontrol jlang >debian/tmp/jlang/DEBIAN/control
+	debian/packagecontrol libj >debian/tmp/libj/DEBIAN/control
 	cd debian/tmp/jlang; find etc -type f | sed 's}^}/}' >DEBIAN/conffiles
 	cp debian/post* debian/tmp/jlang/DEBIAN
 	cp debian/post* debian/tmp/libj/DEBIAN
 	find debian/tmp -type d | xargs chmod 755
 	find debian/tmp -type f | xargs chmod 644
-	chmod 755 debian/tmp/*/DEBIAN/p*
-	chmod 755 debian/tmp/jlang/usr/bin/ijconsole
+	chmod 755 debian/tmp/*/DEBIAN/p* debian/tmp/jlang/usr/bin/ijconsole
 	cd debian/tmp/jlang/DEBIAN; tar czf ../../control.tar.gz --owner=root --group=root ./*
 	cd debian/tmp/jlang; tar czf ../data.tar.gz --owner=root --group=root ./usr ./etc
 	echo 2.0 >debian/tmp/debian-binary
-	cd debian/tmp; ar rf ../../../jlang_8.0.1.4_amd64.deb debian-binary control.tar.gz data.tar.gz
-	echo jlang_8.0.1.4_amd64.deb devel extra > debian/files
+	cd debian/tmp; ar rf ../../../jlang_`../version revision`.deb debian-binary control.tar.gz data.tar.gz
+	echo jlang_`debian/version package`.deb devel extra >debian/files
 	cd debian/tmp/libj/DEBIAN; tar czf ../../control.tar.gz --owner=root --group=root ./*
 	cd debian/tmp/libj; tar czf ../data.tar.gz --owner=root --group=root ./usr
-	cd debian/tmp; ar rf ../../../libj_8.0.1.4_amd64.deb debian-binary control.tar.gz data.tar.gz
-	echo libj_8.0.1.4_amd64.deb libdevel extra >> debian/files
+	cd debian/tmp; ar rf ../../../libj_`../version package`.deb debian-binary control.tar.gz data.tar.gz
+	echo libj_`debian/version package`.deb libdevel extra >>debian/files
 
 binary-arch:
 

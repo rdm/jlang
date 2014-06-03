@@ -7,7 +7,7 @@ Standards-Version: 3.9.5.0
 Homepage: http://www.jsoftware.com
 
 Package: jlang
-Architecture: amd64
+Architecture: any
 Priority: extra
 Depends: libc6 (>=2.13-28), libj
 Section: devel
@@ -20,10 +20,11 @@ Description: J interpreter
  Android and iOS.
 
 Package: libj
-Architecture: amd64
+Architecture: any
 Priority: extra
 Depends: libc6 (>=2.13-28)
 Section: libdevel
+Multi-Arch: same
 Description: J interpreter
  Keep this installed while upgrading J if you have your
  own custom softare linked against libj and do not have

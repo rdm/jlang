@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if ! grep "^Package: $1$" debian/control >/dev/null; then
+	>&2 echo Usage: $0 packagename
+	>&2 echo "	packagename might be jlang or libj"
+	exit 1
+fi
+sed -n "/^Package: $1/",'/^$/p' debian/control |
+	sed "s}Architecture: any}Architecture: $(debian/version arch)}" |
+	grep .
+grep Maintainer: debian/control
+echo Version: $(debian/version revision)

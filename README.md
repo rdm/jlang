@@ -23,5 +23,5 @@ CAUTION: If you use git clone in the typical fashion to pull
 this repository from github, you will get its contents in a
 directory named 'jlang'. However, if you unpack it from
 a debian package, you will get a directory with a name like
-'jlang-8.0.1'. That works great for me, and the way I work,
+'jlang-8.0.1.5'. That works great for me, and the way I work,
 but may surprise some people.
