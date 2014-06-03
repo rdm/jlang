@@ -2,21 +2,15 @@
 
 revision=$(head -n 1 $(dirname $0)/changelog | sed 's}.*(}}; s}).*}}')
 os=$(uname -s | tr '[A-Z]' '[a-z]')
-mach=$(uname -m);
-
-arch() {
-	case "$mach" in
-		x86_64) echo amd64;;
-		*) echo $mach;;
-	esac
-}
+mach=$(uname -m)
+arch=$(dpkg --print-architecture)
 
 case "$1" in
 	revision) echo "$revision";;
 	build) echo "$revision" | cut -f-3 -d.;;
 	minor) echo "$revision" | cut -f-2 -d.;;
 	major) echo "$revision" | cut -f-1 -d.;;
-	arch) echo $(arch);;
-	package) echo "${revision}_$(arch)";;
+	arch) echo $arch;;
+	package) echo "${revision}_$arch";;
 	triplet) echo "$mach-$os-gnu";;
 esac
