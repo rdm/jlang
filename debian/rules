@@ -58,7 +58,7 @@ binary:
 	cd debian/tmp/jlang/DEBIAN; tar czf ../../control.tar.gz --owner=root --group=root ./*
 	cd debian/tmp/jlang; tar czf ../data.tar.gz --owner=root --group=root ./usr ./etc
 	echo 2.0 >debian/tmp/debian-binary
-	cd debian/tmp; ar rf ../../../jlang_`../version revision`.deb debian-binary control.tar.gz data.tar.gz
+	cd debian/tmp; ar rf ../../../jlang_`../version package`.deb debian-binary control.tar.gz data.tar.gz
 	echo jlang_`debian/version package`.deb devel extra >debian/files
 	cd debian/tmp/libj/DEBIAN; tar czf ../../control.tar.gz --owner=root --group=root ./*
 	cd debian/tmp/libj; tar czf ../data.tar.gz --owner=root --group=root ./usr
