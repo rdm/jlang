@@ -1,4 +1,6 @@
 #!/bin/sh
+exec echo "tests have been disabled (remove this line to enable)"
+
 # 0 :0 NB. Test a recently built J binary
  cd jgplsrc
  exec j/bin/jconsole "../$0" "$@"
