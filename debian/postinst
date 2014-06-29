@@ -1,4 +1,7 @@
 #!/bin/sh
 set -e
 ldconfig
-gtk-update-icon-cache --quiet --force --ignore-theme-index /usr/share/icons/hicolor
+if [ -x `which gtk-update-icon-cache` ]; then
+  gtk-update-icon-cache --quiet --force --ignore-theme-index
+/usr/share/icons/hicolor
+fi
